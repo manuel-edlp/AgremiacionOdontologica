@@ -1,18 +1,15 @@
 using AgremiacionOdontologica.Data;
+using AgremiacionOdontologica.Dtos;
+using AgremiacionOdontologica.Models;
+using AgremiacionOdontologica.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
+using AutoMapper;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace AgremiacionOdontologica
 {
@@ -25,10 +22,36 @@ namespace AgremiacionOdontologica
 
         public IConfiguration Configuration { get; }
 
+        public class MappingProfile : Profile
+        {
+            public MappingProfile()
+            {
+                CreateMap<Bono, BonoDto>()
+                    .ForMember(dto => dto.odontologo, opt => opt.MapFrom(src => src.odontologo.nombre))
+                    .ForMember(dto => dto.paciente, opt => opt.MapFrom(src => src.paciente.nombre))
+                    .ForMember(dto => dto.bonoEstado, opt => opt.MapFrom(src => src.estado.nombre))
+                    .ForMember(dto => dto.practica, opt => opt.MapFrom(src => src.practica.nombre))
+                    .ForMember(dto => dto.obraSocial, opt => opt.MapFrom(src => src.obraSocial.nombre));
+
+                //CreateMap<BonoDto, Bono>()
+                //    .ForMember(dest => dest.odontologo, opt => opt.Ignore()); // Ignora la propiedad de navegación para evitar problemas de seguimiento de Entity Framework
+
+
+            }
+        }
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApiDb>(options => options.UseNpgsql(Configuration.GetConnectionString("PostgreSQLConnection")));
+            
+            services.AddAutoMapper(typeof(Startup));
+
+            services.AddScoped<BonoService>();
+            services.AddScoped<OdontologoService>();
+            services.AddScoped<ObraSocialService>();
+            services.AddScoped<PacienteService>();
+            services.AddScoped<PracticaService>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

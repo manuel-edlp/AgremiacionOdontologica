@@ -16,7 +16,10 @@ namespace AgremiacionOdontologica.Models
         public int id { get; set; }
 
         [Required]
-        public DateTime fecha { get; set; }
+        public DateTime fecha { get; set; }  
+
+        [Required]
+        public DateTime fechaDeCarga { get; set; }
 
         [Required]
         public int numero { get; set; }

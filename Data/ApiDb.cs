@@ -35,5 +35,5 @@ namespace AgremiacionOdontologica.Data
  comando para migraciones: 
  dotnet ef migrations add NameMigration
  dotnet ef database update  
-
+ 
 */
