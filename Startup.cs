@@ -35,7 +35,12 @@ namespace AgremiacionOdontologica
 
                 //CreateMap<BonoDto, Bono>()
                 //    .ForMember(dest => dest.odontologo, opt => opt.Ignore()); // Ignora la propiedad de navegación para evitar problemas de seguimiento de Entity Framework
+                
+                CreateMap<PracticaDto, Practica>()
+                    .ForMember(dest => dest.id, opt => opt.Ignore());
 
+                CreateMap<PacienteDto, Paciente>()
+                    .ForMember(dest => dest.id, opt => opt.Ignore());
 
             }
         }

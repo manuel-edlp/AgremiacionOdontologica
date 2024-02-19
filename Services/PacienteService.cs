@@ -1,4 +1,7 @@
 ﻿using AgremiacionOdontologica.Data;
+using AgremiacionOdontologica.Dtos;
+using AgremiacionOdontologica.Models;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -11,11 +14,12 @@ namespace AgremiacionOdontologica.Services
     public class PacienteService
     {
         private readonly ApiDb _context;
+        private readonly IMapper _mapper;
 
-        public PacienteService(IConfiguration configuration, ApiDb context)
+        public PacienteService(IConfiguration configuration, ApiDb context, IMapper mapper)
         {
             _context = context;
-
+            _mapper = mapper;
         }
 
         public async Task<int> getIdPaciente(string nombre)
@@ -24,6 +28,25 @@ namespace AgremiacionOdontologica.Services
                 .FirstOrDefaultAsync(p => p.nombre == nombre);
 
             return paciente.id;
+        }
+
+        public async Task<IEnumerable<PacienteDto>> listarPacientes()
+        {
+            // Realiza una consulta a la base de datos para devolver todos los bonos
+            var paciente = await _context.Paciente.ToListAsync();
+
+            var practicasDto = _mapper.Map<IEnumerable<PacienteDto>>(paciente);
+
+            return practicasDto;
+        }
+
+        public async Task<bool> altaPaciente(PacienteDto pacienteDto)
+        {
+            var nuevo = _mapper.Map<Paciente>(pacienteDto);
+            _context.Paciente.Add(nuevo);
+            await _context.SaveChangesAsync();
+
+            return true;
         }
     }
 }
