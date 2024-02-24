@@ -10,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using Microsoft.OpenApi.Models;
+using AgremiacionOdontologica.Controllers.Models;
 
 namespace AgremiacionOdontologica
 {
@@ -33,9 +34,12 @@ namespace AgremiacionOdontologica
                     .ForMember(dto => dto.practica, opt => opt.MapFrom(src => src.practica.nombre))
                     .ForMember(dto => dto.obraSocial, opt => opt.MapFrom(src => src.obraSocial.nombre));
 
+                CreateMap<Odontologo, OdontologoDto>()
+                   .ForMember(dto => dto.estado, opt => opt.MapFrom(src => src.estado.nombre));
+
                 //CreateMap<BonoDto, Bono>()
                 //    .ForMember(dest => dest.odontologo, opt => opt.Ignore()); // Ignora la propiedad de navegación para evitar problemas de seguimiento de Entity Framework
-                
+
                 CreateMap<PracticaDto, Practica>()
                     .ForMember(dest => dest.id, opt => opt.Ignore());
 

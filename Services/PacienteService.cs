@@ -32,12 +32,12 @@ namespace AgremiacionOdontologica.Services
 
         public async Task<IEnumerable<PacienteDto>> listarPacientes()
         {
-            // Realiza una consulta a la base de datos para devolver todos los bonos
+            // Realiza una consulta a la base de datos para devolver todos los pacientes
             var paciente = await _context.Paciente.ToListAsync();
 
-            var practicasDto = _mapper.Map<IEnumerable<PacienteDto>>(paciente);
+            var pacientesDto = _mapper.Map<IEnumerable<PacienteDto>>(paciente);
 
-            return practicasDto;
+            return pacientesDto;
         }
 
         public async Task<bool> altaPaciente(PacienteDto pacienteDto)
