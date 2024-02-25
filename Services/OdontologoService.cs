@@ -41,13 +41,13 @@ namespace AgremiacionOdontologica.Services
             return odontologosDto;
         }
 
-        public async Task<bool> altaOdontologo(OdontologoDto odontologoDto)
+        public async Task<int> altaOdontologo(OdontologoDto odontologoDto)
         {
             var nuevo = _mapper.Map<Odontologo>(odontologoDto);
             _context.Odontologo.Add(nuevo);
             await _context.SaveChangesAsync();
 
-            return true;
+            return nuevo.id;
         }
     }
 }

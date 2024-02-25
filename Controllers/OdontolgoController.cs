@@ -19,7 +19,7 @@ namespace AgremiacionOdontologica.Controllers
         }
 
         [HttpGet("ListarOdontologos")]
-        public async Task<IEnumerable<OdontologoDto>> listarPacientes()
+        public async Task<IEnumerable<OdontologoDto>> listarOdontologos()
         {
             var odontologos = await _odontologoService.listarOdontologos();
 
@@ -33,11 +33,11 @@ namespace AgremiacionOdontologica.Controllers
             {
                 return BadRequest("Odontologo vacio");
             }
-
-            if (await _odontologoService.altaOdontologo(odontologoDto))
+            int id = await _odontologoService.altaOdontologo(odontologoDto);
+            if (id > 0)
             {
                 // Devuelvo una respuesta de éxito
-                return Ok();
+                return StatusCode(201,id);
             }
             else
             {
