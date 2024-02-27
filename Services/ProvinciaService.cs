@@ -2,8 +2,8 @@
 using AgremiacionOdontologica.Data;
 using AgremiacionOdontologica.Dtos;
 using AutoMapper;
-using AutoMapper.Configuration;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +25,7 @@ namespace AgremiacionOdontologica.Services
         public async Task<IEnumerable<ProvinciaDto>> listarProvincias()
         {
             // Realiza una consulta a la base de datos para devolver todos los odontologos
-            var provincia = await _context.Localidad
+            var provincia = await _context.Provincia
                 .ToListAsync();
 
             var provinciaDto = _mapper.Map<IEnumerable<ProvinciaDto>>(provincia);

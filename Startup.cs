@@ -38,20 +38,33 @@ namespace AgremiacionOdontologica
                    .ForMember(dto => dto.estado, opt => opt.MapFrom(src => src.estado.nombre));
 
                 CreateMap<Domicilio, DomicilioDto>()
-                    .ForMember(dto => dto.localidad, opt => opt.MapFrom(src => src.localidad.nombre));
+                    .ForMember(dto => dto.localidad, opt => opt.MapFrom(src => src.localidad.nombre))
+                    .ForMember(dto => dto.odontologo, opt => opt.MapFrom(src => src.odontologo.nombre));
 
                 CreateMap<Localidad, LocalidadDto>()
                     .ForMember(dto => dto.provincia, opt => opt.MapFrom(src => src.provincia.nombre));
+               
+              
 
-                //CreateMap<BonoDto, Bono>()
-                //    .ForMember(dest => dest.odontologo, opt => opt.Ignore()); // Ignora la propiedad de navegación para evitar problemas de seguimiento de Entity Framework
+
+                CreateMap<BonoDto, Bono>()
+                    .ForMember(dest => dest.odontologo, opt => opt.Ignore()); // Ignora la propiedad de navegación para evitar problemas de seguimiento de Entity Framework
 
                 CreateMap<PracticaDto, Practica>()
                     .ForMember(dest => dest.id, opt => opt.Ignore());
 
                 CreateMap<PacienteDto, Paciente>()
                     .ForMember(dest => dest.id, opt => opt.Ignore());
+               
+                CreateMap<ProvinciaDto, Provincia>()
+                    .ForMember(dest => dest.id, opt => opt.Ignore());
+               
+                CreateMap<LocalidadDto,Localidad>()
+                   .ForMember(dest => dest.provincia, opt => opt.Ignore());
 
+                CreateMap<DomicilioDto, Domicilio>()
+                   .ForMember(dest => dest.odontologo, opt => opt.Ignore())
+                   .ForMember(dest => dest.localidad, opt => opt.Ignore());
             }
         }
 
@@ -67,6 +80,9 @@ namespace AgremiacionOdontologica
             services.AddScoped<ObraSocialService>();
             services.AddScoped<PacienteService>();
             services.AddScoped<PracticaService>();
+            services.AddScoped<DomicilioService>();
+            services.AddScoped<LocalidadService>();
+            services.AddScoped<ProvinciaService>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

@@ -24,5 +24,11 @@ namespace AgremiacionOdontologica.Controllers.Models
         public int idLocalidad { get; set; }
 
         public virtual Localidad localidad { get; set; }
+
+        [Required]
+        [ForeignKey("odontologo")]
+        public int idOdontologo { get; set; }
+
+        public virtual Odontologo odontologo { get; set; }
     }
 }

@@ -18,7 +18,7 @@ namespace AgremiacionOdontologica.Controllers
             _localidadService = localidadService;
         }
 
-        [HttpGet("ListarDomicilios")]
+        [HttpGet("ListarLocalidades")]
         public async Task<IEnumerable<LocalidadDto>> listarLocalidades()
         {
             var domicilios = await _localidadService.listarLocalidades();
@@ -26,8 +26,8 @@ namespace AgremiacionOdontologica.Controllers
             return domicilios;
         }
 
-        [HttpPost("AltaOdontologo")] // agrega Localidad
-        public async Task<IActionResult> altaDomicilio([FromBody] LocalidadDto localidadDto)
+        [HttpPost("AltaLocalidad")] // agrega Localidad
+        public async Task<IActionResult> altaLocalidad([FromBody] LocalidadDto localidadDto)
         {
             if (localidadDto == null)
             {

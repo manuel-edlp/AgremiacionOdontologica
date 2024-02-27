@@ -2,8 +2,8 @@
 using AgremiacionOdontologica.Data;
 using AgremiacionOdontologica.Dtos;
 using AutoMapper;
-using AutoMapper.Configuration;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,7 +36,21 @@ namespace AgremiacionOdontologica.Services
 
         public async Task<int> altaLocalidad(LocalidadDto localidadDto)
         {
+            // Verifico si la provincia ya existe en la base de datos
+            Provincia provincia = await _context.Provincia
+                .FirstOrDefaultAsync(p => p.nombre == localidadDto.provincia);
+
+            if (provincia == null)
+            {
+                // Si el provincia no existe cancelo el agregar
+                return 0;
+
+            }
+
+            // Crea la localidad y asigna el id de la provincia
             var nuevo = _mapper.Map<Localidad>(localidadDto);
+            nuevo.idProvincia = provincia.id;
+            
             _context.Localidad.Add(nuevo);
             await _context.SaveChangesAsync();
 

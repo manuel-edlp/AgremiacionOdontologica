@@ -26,7 +26,7 @@ namespace AgremiacionOdontologica.Controllers
             return domicilios;
         }
 
-        [HttpPost("AltaOdontologo")] // agrega Domicilio
+        [HttpPost("AltaDomicilio")] // agrega Domicilio
         public async Task<IActionResult> altaDomicilio([FromBody] DomicilioDto domicilioDto)
         {
             if (domicilioDto == null)
