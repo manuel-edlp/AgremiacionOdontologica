@@ -68,7 +68,8 @@ namespace AgremiacionOdontologica.Services
             var nuevo = _mapper.Map<Domicilio>(domicilioDto);
             nuevo.idOdontologo = odontologo.id;
             nuevo.idLocalidad = localidad.id;
-            
+
+            _context.Domicilio.Add(nuevo);
             await _context.SaveChangesAsync();
 
             return nuevo.id;

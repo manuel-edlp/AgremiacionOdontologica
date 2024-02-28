@@ -34,6 +34,10 @@ namespace AgremiacionOdontologica
                     .ForMember(dto => dto.practica, opt => opt.MapFrom(src => src.practica.nombre))
                     .ForMember(dto => dto.obraSocial, opt => opt.MapFrom(src => src.obraSocial.nombre));
 
+                CreateMap<Entrega, EntregaDto>()
+                   .ForMember(dto => dto.odontologo, opt => opt.MapFrom(src => src.odontologo.nombre))
+                   .ForMember(dto => dto.obraSocial, opt => opt.MapFrom(src => src.obraSocial.nombre));
+
                 CreateMap<Odontologo, OdontologoDto>()
                    .ForMember(dto => dto.estado, opt => opt.MapFrom(src => src.estado.nombre));
 
@@ -43,9 +47,17 @@ namespace AgremiacionOdontologica
 
                 CreateMap<Localidad, LocalidadDto>()
                     .ForMember(dto => dto.provincia, opt => opt.MapFrom(src => src.provincia.nombre));
-               
-              
+                 
+                
+                ////////////////////////////////
+                 /// DTOS a MODELOS:
 
+                CreateMap<EntregaDto, Entrega>()
+                   .ForMember(dest => dest.odontologo, opt => opt.Ignore())
+                   .ForMember(dest => dest.obraSocial, opt => opt.Ignore());
+                
+                CreateMap<ObraSocialDto, ObraSocial>()
+                    .ForMember(dest => dest.id, opt => opt.Ignore());
 
                 CreateMap<BonoDto, Bono>()
                     .ForMember(dest => dest.odontologo, opt => opt.Ignore()); // Ignora la propiedad de navegación para evitar problemas de seguimiento de Entity Framework
@@ -73,6 +85,16 @@ namespace AgremiacionOdontologica
         {
             services.AddDbContext<ApiDb>(options => options.UseNpgsql(Configuration.GetConnectionString("PostgreSQLConnection")));
             
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAllOrigins",
+                policy => policy
+                    .AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader());
+
+            });
+
             services.AddAutoMapper(typeof(Startup));
 
             services.AddScoped<BonoService>();
@@ -83,6 +105,7 @@ namespace AgremiacionOdontologica
             services.AddScoped<DomicilioService>();
             services.AddScoped<LocalidadService>();
             services.AddScoped<ProvinciaService>();
+            services.AddScoped<EntregaService>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -101,6 +124,9 @@ namespace AgremiacionOdontologica
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AgremiacionOdontologica v1"));
             }
             // interfaz grafica swagger:https://localhost:5002/swagger/index.html
+
+            app.UseCors("AllowAllOrigins");
+
             app.UseHttpsRedirection();
 
             app.UseRouting();

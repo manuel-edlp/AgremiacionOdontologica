@@ -10,10 +10,10 @@ namespace AgremiacionOdontologica.Controllers
 {
     [ApiController]
     [Route("Agremiacion/[controller]")]
-    public class OdonotologoController : ControllerBase
+    public class OdontologoController : ControllerBase
     {
         private readonly OdontologoService _odontologoService;
-        public OdonotologoController(OdontologoService odontologoService)
+        public OdontologoController(OdontologoService odontologoService)
         {
             _odontologoService = odontologoService;
         }
