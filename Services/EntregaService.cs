@@ -57,5 +57,82 @@ namespace AgremiacionOdontologica.Services
 
             return true;
         }
+        public async Task<bool> ModificarEntrega(EntregaDto entregaDto , int id)
+        {
+            try
+            {
+                var entrega = await _context.Entrega
+                    .Include(e => e.odontologo)
+                    .Include(e => e.obraSocial)
+                    .FirstOrDefaultAsync(e => e.id == id);
+
+                if (entrega == null) // verifico que se encuentre 
+                {
+                    return false;
+                }
+
+                var odontologo = await _context.Odontologo
+                    .Where(o => o.nombre == entregaDto.odontologo)
+                    .FirstOrDefaultAsync();
+
+                if (odontologo == null)
+                {
+                    return false;
+                } 
+                
+                var obraSocial = await _context.ObraSocial
+                    .Where(o => o.nombre == entregaDto.obraSocial)
+                    .FirstOrDefaultAsync();
+
+                if (obraSocial == null)
+                {
+                    return false;
+                }
+
+                entrega.inicio = entregaDto.inicio;
+                entrega.final = entregaDto.final;
+                entrega.idOdontologo = odontologo.id;
+                entrega.idObraSocial = obraSocial.id;
+
+                await _context.SaveChangesAsync();  // actualizo bd
+
+                return true;    // retorno modificacion exitosa
+
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+        }
+
+        public async Task<bool> EliminarEntrega(int id)
+        {
+            try
+            {
+                // Obtener el entrega del contexto de la base de datos
+                Entrega entrega = await _context.Entrega
+                 .FirstOrDefaultAsync(e => e.id == id);
+
+                // Si el entrega no existe, devuelve falso
+                if (entrega == null)
+                {
+                    return false;
+                }
+
+                // Elimino el videojuego del contexto de la base de datos
+                _context.Entrega.Remove(entrega);
+
+                // Guardo los cambios en la base de datos
+                await _context.SaveChangesAsync();
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
     }
 }
