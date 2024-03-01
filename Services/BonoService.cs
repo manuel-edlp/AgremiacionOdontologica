@@ -49,21 +49,21 @@ namespace AgremiacionOdontologica.Services
         
         public async Task<bool> altaBono(BonoDto bonoDto)
         {
-            var nuevo = new Bono();
-            nuevo.fecha = bonoDto.fecha;
-            nuevo.fechaDeCarga = DateTime.Now;
-            nuevo.numero = bonoDto.numero;
+            //var nuevo = new Bono();
+            //nuevo.fecha = bonoDto.fecha;
+            //nuevo.fechaDeCarga = DateTime.Now;
+            //nuevo.numero = bonoDto.numero;
 
-            nuevo.idBonoEstado = 2; // seteo estado "Ingresado"   (Estados: 1. Entregado  2. Ingresado)
+            //nuevo.idBonoEstado = 2; // seteo estado "Ingresado"   (Estados: 1. Entregado  2. Ingresado)
 
-            nuevo.idOdontologo = await _odontologoService.getIdOdontologo(bonoDto.odontologo);
-            nuevo.idObraSocial = await _obraSocialService.getIdObraSocial(bonoDto.obraSocial);
-            nuevo.idPaciente = await _pacienteService.getIdPaciente(bonoDto.paciente);
-            nuevo.idPractica = await _practicaService.getIdPractica(bonoDto.practica);
+            //nuevo.idOdontologo = await _odontologoService.getIdOdontologo(bonoDto.odontologo);
+            //nuevo.idObraSocial = await _obraSocialService.getIdObraSocial(bonoDto.obraSocial);
+            //nuevo.idPaciente = await _pacienteService.getIdPaciente(bonoDto.paciente);
+            //nuevo.idPractica = await _practicaService.getIdPractica(bonoDto.practica);
 
 
-            _context.Bono.Add(nuevo);
-            await _context.SaveChangesAsync();
+            //_context.Bono.Add(nuevo);
+            //await _context.SaveChangesAsync();
 
             return true;
         }

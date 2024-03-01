@@ -45,5 +45,8 @@ namespace AgremiacionOdontologica.Controllers
                 return StatusCode(500, "Odontologo no creado, error interno del servidor.");
             }
         }
+        [HttpGet("listar/{busqueda}")] // Listar nombres de videojuegos buscando por nombre
+        public async Task<IEnumerable<OdontologoDto>> BuscarOdontologo(string busqueda) => await _odontologoService.BuscarOdontologo(busqueda);
+   
     }
 }

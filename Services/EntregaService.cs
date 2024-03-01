@@ -48,7 +48,7 @@ namespace AgremiacionOdontologica.Services
             nuevo.inicio = entregaDto.inicio;
             nuevo.final = entregaDto.final;
 
-            nuevo.idOdontologo = await _odontologoService.getIdOdontologo(entregaDto.odontologo);
+            nuevo.idOdontologo = await _odontologoService.getIdOdontologo(entregaDto.odontologoNombre, entregaDto.odontologoApellido);
             nuevo.idObraSocial = await _obraSocialService.getIdObraSocial(entregaDto.obraSocial);
 
 
@@ -72,7 +72,7 @@ namespace AgremiacionOdontologica.Services
                 }
 
                 var odontologo = await _context.Odontologo
-                    .Where(o => o.nombre == entregaDto.odontologo)
+                    .Where(o => o.nombre == entregaDto.odontologoNombre && o.apellido== entregaDto.odontologoApellido)
                     .FirstOrDefaultAsync();
 
                 if (odontologo == null)

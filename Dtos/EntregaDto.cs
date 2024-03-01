@@ -10,7 +10,8 @@ namespace AgremiacionOdontologica.Dtos
         public int id{ get; set; }
         public int inicio { get; set; }
         public int final { get; set; }
-        public string odontologo { get; set; }
+        public string odontologoNombre { get; set; }
+        public string odontologoApellido { get; set; }
         public string obraSocial { get; set; }
 
     }

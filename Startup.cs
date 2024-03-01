@@ -35,7 +35,8 @@ namespace AgremiacionOdontologica
                     .ForMember(dto => dto.obraSocial, opt => opt.MapFrom(src => src.obraSocial.nombre));
 
                 CreateMap<Entrega, EntregaDto>()
-                   .ForMember(dto => dto.odontologo, opt => opt.MapFrom(src => src.odontologo.nombre))
+                   .ForMember(dto => dto.odontologoNombre, opt => opt.MapFrom(src => src.odontologo.nombre))
+                   .ForMember(dto => dto.odontologoApellido, opt => opt.MapFrom(src => src.odontologo.apellido))
                    .ForMember(dto => dto.obraSocial, opt => opt.MapFrom(src => src.obraSocial.nombre));
 
                 CreateMap<Odontologo, OdontologoDto>()

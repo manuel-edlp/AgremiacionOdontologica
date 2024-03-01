@@ -4,7 +4,9 @@ using AgremiacionOdontologica.Dtos;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace AgremiacionOdontologica.Services
@@ -21,10 +23,10 @@ namespace AgremiacionOdontologica.Services
 
         }
 
-        public async Task<int> getIdOdontologo(string nombre)
+        public async Task<int> getIdOdontologo(string nombre, string apellido)
         {
             var odontologo = await _context.Odontologo
-                .FirstOrDefaultAsync(o => o.nombre == nombre);
+                .FirstOrDefaultAsync(o => o.nombre == nombre && o.apellido==apellido);
 
 
             return odontologo.id;
@@ -61,6 +63,22 @@ namespace AgremiacionOdontologica.Services
             await _context.SaveChangesAsync();
 
             return nuevo.id;
+        }
+
+        public async Task<IEnumerable<OdontologoDto>> BuscarOdontologo(string busqueda)
+        {
+            // Convertir la búsqueda a minúsculas para evitar problemas de sensibilidad a mayúsculas y minúsculas
+            var busquedaMinuscula = busqueda.ToLower();
+
+            // Filtrar los odontólogos por nombre o apellido
+            var odontologos =  _context.Odontologo.Where(o => o.nombre.ToLower().Contains(busquedaMinuscula) ||
+                    o.apellido.ToLower().Contains(busquedaMinuscula) ||
+                    (o.nombre.ToLower() + " " + o.apellido.ToLower()).Contains(busquedaMinuscula));
+
+            var odontologosDto = _mapper.Map<IEnumerable<OdontologoDto>>(odontologos);
+
+            return odontologosDto;
+
         }
     }
 }
