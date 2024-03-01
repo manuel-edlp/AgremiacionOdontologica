@@ -67,7 +67,11 @@ namespace AgremiacionOdontologica
 
                 CreateMap<PacienteDto, Paciente>()
                     .ForMember(dest => dest.id, opt => opt.Ignore());
-               
+
+                CreateMap<OdontologoDto, Odontologo>()
+                  .ForMember(dest => dest.id, opt => opt.Ignore())
+                  .ForMember(dest => dest.estado, opt => opt.Ignore());
+
                 CreateMap<ProvinciaDto, Provincia>()
                     .ForMember(dest => dest.id, opt => opt.Ignore());
                

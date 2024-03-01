@@ -43,7 +43,20 @@ namespace AgremiacionOdontologica.Services
 
         public async Task<int> altaOdontologo(OdontologoDto odontologoDto)
         {
+            OdontologoEstado odontologoEstado = await _context.OdontologoEstado
+                   .FirstOrDefaultAsync(d => d.nombre == odontologoDto.estado);
+
+            if (odontologoEstado == null)
+            {
+                // Si el desarrollador no existe cancelo el agregar
+                return 0;
+
+            }
+
             var nuevo = _mapper.Map<Odontologo>(odontologoDto);
+
+            nuevo.idOdontologoEstado = odontologoEstado.id;
+
             _context.Odontologo.Add(nuevo);
             await _context.SaveChangesAsync();
 
