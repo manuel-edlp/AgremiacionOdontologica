@@ -36,7 +36,8 @@ namespace AgremiacionOdontologica.Services
             // Realiza una consulta a la base de datos para devolver todos los odontologos
             var domicilio = await _context.Domicilio
                 .Include(d => d.localidad)
-                .Include(d => d.odontologo)
+                .Include(d => d.odontologoNombre)
+                .Include(d => d.odontologoApellido)
                 .ToListAsync();
 
             var domiciliosDto = _mapper.Map<IEnumerable<DomicilioDto>>(domicilio);
@@ -46,8 +47,10 @@ namespace AgremiacionOdontologica.Services
 
         public async Task<int> altaDomicilio(DomicilioDto domicilioDto)
         {
-            Odontologo odontologo = await _context.Odontologo
-              .FirstOrDefaultAsync(o => o.nombre == domicilioDto.odontologo);
+          
+            var odontologo = await _context.Odontologo
+                    .Where(o => o.nombre == domicilioDto.odontologoNombre && o.apellido == domicilioDto.odontologoApellido)
+                    .FirstOrDefaultAsync();
 
             if (odontologo == null)
             {
@@ -66,7 +69,8 @@ namespace AgremiacionOdontologica.Services
             }
             // Crea el domicilio y asigna el id de la localidad
             var nuevo = _mapper.Map<Domicilio>(domicilioDto);
-            nuevo.idOdontologo = odontologo.id;
+            nuevo.idOdontologoNombre = odontologo.id;
+            nuevo.idOdontologoApellido = odontologo.id;
             nuevo.idLocalidad = localidad.id;
 
             _context.Domicilio.Add(nuevo);

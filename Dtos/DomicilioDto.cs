@@ -10,6 +10,7 @@ namespace AgremiacionOdontologica.Dtos
         public string calle { get; set; }
         public int numero { get; set; }
         public string localidad { get; set; }
-        public string odontologo { get; set; }
+        public string odontologoNombre { get; set; }
+        public string odontologoApellido { get; set; }
     }
 }

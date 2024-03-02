@@ -1,4 +1,5 @@
-﻿using AgremiacionOdontologica.Dtos;
+﻿using AgremiacionOdontologica.Controllers.Models;
+using AgremiacionOdontologica.Dtos;
 using AgremiacionOdontologica.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -19,7 +20,7 @@ namespace AgremiacionOdontologica.Controllers
         }
 
         [HttpGet("ListarOdontologos")]
-        public async Task<IEnumerable<OdontologoDto>> listarOdontologos()
+        public async Task<IEnumerable<Odontologo>> listarOdontologos()
         {
             var odontologos = await _odontologoService.listarOdontologos();
 
@@ -45,8 +46,8 @@ namespace AgremiacionOdontologica.Controllers
                 return StatusCode(500, "Odontologo no creado, error interno del servidor.");
             }
         }
-        [HttpGet("listar/{busqueda}")] // Listar nombres de videojuegos buscando por nombre
-        public async Task<IEnumerable<OdontologoDto>> BuscarOdontologo(string busqueda) => await _odontologoService.BuscarOdontologo(busqueda);
+        [HttpGet("listar/{busqueda}")] // Listar odontologos buscando por nombre y/o apellido
+        public async Task<IEnumerable<Odontologo>> BuscarOdontologo(string busqueda) => await _odontologoService.BuscarOdontologo(busqueda);
    
     }
 }

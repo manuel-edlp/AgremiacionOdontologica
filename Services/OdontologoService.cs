@@ -31,16 +31,16 @@ namespace AgremiacionOdontologica.Services
 
             return odontologo.id;
         }
-        public async Task<IEnumerable<OdontologoDto>> listarOdontologos()
+        public async Task<IEnumerable<Odontologo>> listarOdontologos()
         {
             // Realiza una consulta a la base de datos para devolver todos los odontologos
-            var odontologo = await _context.Odontologo
+            var odontologos = await _context.Odontologo
                 .Include(o => o.estado)
                 .ToListAsync();
 
-            var odontologosDto = _mapper.Map<IEnumerable<OdontologoDto>>(odontologo);
 
-            return odontologosDto;
+
+            return odontologos;
         }
 
         public async Task<int> altaOdontologo(OdontologoDto odontologoDto)
@@ -65,7 +65,7 @@ namespace AgremiacionOdontologica.Services
             return nuevo.id;
         }
 
-        public async Task<IEnumerable<OdontologoDto>> BuscarOdontologo(string busqueda)
+        public async Task<IEnumerable<Odontologo>> BuscarOdontologo(string busqueda)
         {
             // Convertir la búsqueda a minúsculas para evitar problemas de sensibilidad a mayúsculas y minúsculas
             var busquedaMinuscula = busqueda.ToLower();
@@ -75,9 +75,8 @@ namespace AgremiacionOdontologica.Services
                     o.apellido.ToLower().Contains(busquedaMinuscula) ||
                     (o.nombre.ToLower() + " " + o.apellido.ToLower()).Contains(busquedaMinuscula));
 
-            var odontologosDto = _mapper.Map<IEnumerable<OdontologoDto>>(odontologos);
 
-            return odontologosDto;
+            return odontologos;
 
         }
     }

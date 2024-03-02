@@ -1,4 +1,5 @@
 ﻿using AgremiacionOdontologica.Dtos;
+using AgremiacionOdontologica.Models;
 using AgremiacionOdontologica.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
