@@ -20,7 +20,7 @@ namespace AgremiacionOdontologica.Controllers
         }
 
         [HttpGet("ListarObrasSociales")]
-        public async Task<IEnumerable<ObraSocialDto>> listarObrasSociales()
+        public async Task<IEnumerable<ObraSocial>> listarObrasSociales()
         {
             var obrasSociales = await _obraSocialService.listarObrasSociales();
 
@@ -45,6 +45,26 @@ namespace AgremiacionOdontologica.Controllers
                 // Retorno respuesta de fallo del servidor con el codigo 500
                 return StatusCode(500, "Obra Social no creada, error interno del servidor.");
             }
+        }
+        [HttpGet("getIdObraSocial/{nombre}")] // agrega obrasSociales
+        public async Task<IActionResult> getIdObraSocial(string nombre)
+        {
+            if (nombre == null)
+            {
+                return BadRequest("Obra social vacia");
+            }
+            var id = await _obraSocialService.getIdObraSocial(nombre);
+            if (id != null)
+            {
+                // Devuelvo una respuesta de éxito
+                return StatusCode(201, id);
+            }
+            else
+            {
+                // Retorno respuesta de fallo del servidor con el codigo 500
+                return StatusCode(500, "id nulo");
+            }
+
         }
     }
 }

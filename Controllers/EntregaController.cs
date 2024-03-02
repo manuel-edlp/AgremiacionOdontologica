@@ -46,7 +46,7 @@ namespace AgremiacionOdontologica.Controllers
                 return StatusCode(500, "Entrega no creada, error interno del servidor.");
             }
         }
-        [HttpPut("{id}")] // modifico un videojuego completo por nombre
+        [HttpPut("{id}")] // modifico una entrega completo por nombre
         public async Task<IActionResult> ModificarEntrega([FromBody] EntregaDto entregaDto, int id)
         {
             if (entregaDto == null) // verifico que los datos no esten vacios
@@ -56,7 +56,7 @@ namespace AgremiacionOdontologica.Controllers
 
             if (await _entregaService.ModificarEntrega(entregaDto, id)) // verifico si se modifica exitosamente
             {
-             
+
                 return Ok(entregaDto);
             }
             else return NotFound("Fallo en la modificación");
@@ -76,6 +76,20 @@ namespace AgremiacionOdontologica.Controllers
                 return NotFound($"Fallo al eliminar,entrega con id {id} no encontrada");
             }
         }
-       
+        [HttpGet("getEntregaById/{id}")]
+        public async Task<IActionResult>getEntregaById(int id)
+        {
+            var entrega = await _entregaService.getEntregaById(id);
+            if ( entrega is not null)
+            {
+                // Devuelvo una respuesta de éxito al eliminar
+                return StatusCode(200, entrega); 
+            }
+            else
+            {
+                // Si la eliminación falla o el videojuego no existe, devuelvo NotFound
+                return StatusCode(204, "Entrega no encontrada"); // Código 204 (Sin contenido)
+            }
+        }
     }
 }

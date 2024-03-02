@@ -21,14 +21,14 @@ namespace AgremiacionOdontologica.Services
             _context = context;
             _mapper = mapper;
         }
-        public async Task<IEnumerable<ObraSocialDto>> listarObrasSociales()
+        public async Task<IEnumerable<ObraSocial>> listarObrasSociales()
         {
             // Realiza una consulta a la base de datos para devolver todos los pacientes
-            var obraSocial = await _context.ObraSocial.ToListAsync();
+            var obrasSociales = await _context.ObraSocial.ToListAsync();
 
-            var obrasSocialesDto = _mapper.Map<IEnumerable<ObraSocialDto>>(obraSocial);
 
-            return obrasSocialesDto;
+
+            return obrasSociales;
         }
         public async Task<int> getIdObraSocial(string nombre)
         {

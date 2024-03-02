@@ -57,6 +57,18 @@ namespace AgremiacionOdontologica.Services
 
             return true;
         }
+
+        public async Task<Entrega>getEntregaById(int id)
+        {
+            // Realiza una consulta a la base de datos para devolver todos los bonos
+            var entrega = await _context.Entrega.Where(e => e.id == id)
+                .Include(b => b.odontologo)
+                .Include(b => b.obraSocial)
+                .FirstOrDefaultAsync();
+
+            return entrega;
+        }
+
         public async Task<bool> ModificarEntrega(EntregaDto entregaDto , int id)
         {
             try
