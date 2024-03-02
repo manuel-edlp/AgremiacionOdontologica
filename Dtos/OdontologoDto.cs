@@ -12,5 +12,6 @@ namespace AgremiacionOdontologica.Dtos
         public int dni { get; set; }
         public int matricula { get; set; }
         public string estado { get; set; }
+
     }
 }

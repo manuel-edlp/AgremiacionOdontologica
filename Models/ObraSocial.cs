@@ -12,5 +12,7 @@ namespace AgremiacionOdontologica.Models
         [Required]
         public string nombre { get; set; }
 
+        [Required]
+        public int codigo { get; set; }
     }
 }
