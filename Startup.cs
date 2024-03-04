@@ -39,8 +39,7 @@ namespace AgremiacionOdontologica
                    .ForMember(dto => dto.odontologoApellido, opt => opt.MapFrom(src => src.odontologo.apellido))
                    .ForMember(dto => dto.obraSocial, opt => opt.MapFrom(src => src.obraSocial.nombre));
 
-                CreateMap<Odontologo, OdontologoDto>()
-                   .ForMember(dto => dto.estado, opt => opt.MapFrom(src => src.estado.nombre));
+
 
                 CreateMap<Domicilio, DomicilioDto>()
                     .ForMember(dto => dto.localidad, opt => opt.MapFrom(src => src.localidad.nombre))
@@ -71,8 +70,7 @@ namespace AgremiacionOdontologica
                     .ForMember(dest => dest.id, opt => opt.Ignore());
 
                 CreateMap<OdontologoDto, Odontologo>()
-                  .ForMember(dest => dest.id, opt => opt.Ignore())
-                  .ForMember(dest => dest.estado, opt => opt.Ignore());
+                  .ForMember(dest => dest.id, opt => opt.Ignore());
 
                 CreateMap<ProvinciaDto, Provincia>()
                     .ForMember(dest => dest.id, opt => opt.Ignore());
